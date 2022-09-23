@@ -1,25 +1,32 @@
 # Declare the local Bazel workspace.
-workspace(
-    # If your ruleset is "official"
-    # (i.e. is in the bazelbuild GitHub org)
-    # then this should just be named "rules_mylang"
-    # see https://docs.bazel.build/versions/main/skylark/deploying.html#workspace
-    name = "com_myorg_rules_mylang",
-)
+workspace(name = "aspect_rules_cypress")
 
-load(":internal_deps.bzl", "rules_mylang_internal_deps")
+load(":internal_deps.bzl", "rules_cypress_internal_deps")
 
 # Fetch deps needed only locally for development
-rules_mylang_internal_deps()
+rules_cypress_internal_deps()
 
-load("//mylang:repositories.bzl", "mylang_register_toolchains", "rules_mylang_dependencies")
+load("//cypress:dependencies.bzl", "rules_cypress_dependencies")
 
 # Fetch dependencies which users need as well
-rules_mylang_dependencies()
+rules_cypress_dependencies()
 
-mylang_register_toolchains(
-    name = "mylang1_14",
-    mylang_version = "1.14.2",
+load("@aspect_bazel_lib//lib:repositories.bzl", "aspect_bazel_lib_dependencies")
+
+aspect_bazel_lib_dependencies()
+
+load("@rules_nodejs//nodejs:repositories.bzl", "DEFAULT_NODE_VERSION", "nodejs_register_toolchains")
+
+nodejs_register_toolchains(
+    name = "nodejs",
+    node_version = DEFAULT_NODE_VERSION,
+)
+
+load("//cypress:repositories.bzl", "cypress_register_toolchains")
+
+cypress_register_toolchains(
+    name = "cypress",
+    cypress_version = "10.8.0",
 )
 
 # For running our own unit tests

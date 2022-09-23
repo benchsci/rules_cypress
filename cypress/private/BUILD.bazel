@@ -6,8 +6,4 @@ bzl_library(
     visibility = ["//mylang:__subpackages__"],
 )
 
-bzl_library(
-    name = "versions",
-    srcs = ["versions.bzl"],
-    visibility = ["//mylang:__subpackages__"],
-)
+
