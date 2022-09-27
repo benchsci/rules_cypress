@@ -44,3 +44,16 @@ go_rules_dependencies()
 go_register_toolchains(version = "1.17.2")
 
 gazelle_dependencies()
+
+load("@aspect_rules_js//npm:npm_import.bzl", "npm_import", "npm_translate_lock")
+
+npm_translate_lock(
+    name = "npm",
+    pnpm_lock = "//cypress/tests:pnpm-lock.yaml",
+    pnpm_version = "6.32.19",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+
+load("@npm//:repositories.bzl", "npm_repositories")
+
+npm_repositories()

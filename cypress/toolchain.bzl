@@ -29,7 +29,7 @@ def _cypress_toolchain_impl(ctx):
 
     if ctx.attr.target_tool:
         tool_files = ctx.attr.target_tool_files.files.to_list()
-        target_tool_path = _to_manifest_path(ctx, tool_files[0])
+        target_tool_path = _to_manifest_path(ctx, ctx.attr.target_tool.files.to_list()[0])
 
     # Make the $(tool_BIN) variable available in places like genrules.
     # See https://docs.bazel.build/versions/main/be/make-variables.html#custom_variables

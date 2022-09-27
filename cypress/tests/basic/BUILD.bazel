@@ -1,0 +1,13 @@
+load("//cypress:defs.bzl", "cypress_test")
+
+
+cypress_test(
+    name = "basic",
+    runner = "runner.js",
+    data = [
+        "basic.cy.js", 
+        "cypress.config.js", 
+        "//cypress/tests:node_modules"
+    ],
+)
+
