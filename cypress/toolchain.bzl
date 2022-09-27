@@ -69,7 +69,7 @@ cypress_toolchain = rule(
         "target_tool_files": attr.label(
             doc = "Files required in runfiles to make the cypress executable available.",
             mandatory = False,
-            allow_single_file = True,
+            allow_files = True,
         ),
         "target_tool_path": attr.string(
             doc = "Path to an existing executable for the target platform.",
