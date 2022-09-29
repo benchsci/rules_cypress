@@ -61,18 +61,21 @@ cypress_repositories = repository_rule(
 
 # Wrapper macro around everything above, this is the primary API
 def cypress_register_toolchains(name, platform_to_integrity_hash = {}, **kwargs):
-    """Convenience macro for users which does typical setup.
+    """
+    Convenience macro for setting up cypress toolchain for all supported platforms.
 
-    - create a repository for each built-in platform like "cypress_linux_amd64" -
+    - create a repository for each built-in platform like "cypress_linux-x64" -
       this repository is lazily fetched when node is needed for that platform.
-    - TODO: create a convenience repository for the host platform like "cypress_host"
-    - create a repository exposing toolchains for each platform like "cypress_platforms"
-    - register a toolchain pointing at each platform
-    Users can avoid this macro and do these steps themselves, if they want more control.
+
     Args:
-        name: base name for all created repos, like "cypress1_14"
-        platform_to_integrity_hash: mapping from platform to integrity hash. 
-          Platforms names are within cypress/private/toolchains_repo.bzl
+        name: base name for all created repos, like `cypress` or `cypress_10_1`
+        platform_to_integrity_hash: Mapping from platform to integrity file hash
+
+            Valid platform values are: darwin-x64, darwin-arm64, linux-x64 and linux-arm64. See @aspect_rules_cypress//cypress/private:toolchains_repo.bzl
+
+            To download a binary to compute its integrity hash, see https://docs.cypress.io/guides/references/advanced-installation#Download-URLs
+
+            Once downloaded, run `shasum -a 256` to get the integrity hash
         **kwargs: passed to each node_repositories call
     """
     for platform in PLATFORMS.keys():
