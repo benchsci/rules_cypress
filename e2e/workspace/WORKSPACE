@@ -15,6 +15,7 @@ local_repository(
 # Alternatively, you can skip calling this function, so long as you've
 # already fetched all the dependencies.
 load("@aspect_rules_cypress//cypress:dependencies.bzl", "rules_cypress_dependencies")
+load("@aspect_rules_cypress//cypress:repositories.bzl", "cypress_register_toolchains")
 
 rules_cypress_dependencies()
 
