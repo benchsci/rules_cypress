@@ -1,13 +1,11 @@
-load("//cypress:defs.bzl", "cypress_test")
-
+load("@aspect_rules_cypress//cypress:defs.bzl", "cypress_test")
 
 cypress_test(
     name = "basic",
-    runner = "runner.js",
     data = [
-        "basic.cy.js", 
-        "cypress.config.js", 
-        "//cypress/tests:node_modules"
+        "basic.cy.js",
+        "cypress.config.js",
+        "@aspect_rules_cypress//cypress/tests:node_modules",
     ],
+    runner = "runner.js",
 )
-

@@ -6,7 +6,7 @@ load(":internal_deps.bzl", "rules_cypress_internal_deps")
 # Fetch deps needed only locally for development
 rules_cypress_internal_deps()
 
-load("//cypress:dependencies.bzl", "rules_cypress_dependencies")
+load("@aspect_rules_cypress//cypress:dependencies.bzl", "rules_cypress_dependencies")
 
 # Fetch dependencies which users need as well
 rules_cypress_dependencies()
@@ -22,7 +22,7 @@ nodejs_register_toolchains(
     node_version = DEFAULT_NODE_VERSION,
 )
 
-load("//cypress:repositories.bzl", "cypress_register_toolchains")
+load("@aspect_rules_cypress//cypress:repositories.bzl", "cypress_register_toolchains")
 
 cypress_register_toolchains(
     name = "cypress",
@@ -45,13 +45,13 @@ go_register_toolchains(version = "1.17.2")
 
 gazelle_dependencies()
 
-load("@aspect_rules_js//npm:npm_import.bzl", "npm_import", "npm_translate_lock")
+load("@aspect_rules_js//npm:npm_import.bzl", "npm_translate_lock")
 
 npm_translate_lock(
     name = "npm",
-    pnpm_lock = "//cypress/tests:pnpm-lock.yaml",
+    pnpm_lock = "@aspect_rules_cypress//cypress/tests:pnpm-lock.yaml",
     pnpm_version = "6.32.19",
-    verify_node_modules_ignored = "//:.bazelignore",
+    verify_node_modules_ignored = "@aspect_rules_cypress//:.bazelignore",
 )
 
 load("@npm//:repositories.bzl", "npm_repositories")

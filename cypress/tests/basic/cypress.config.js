@@ -3,6 +3,11 @@ const { defineConfig } = require('cypress')
 module.exports = defineConfig({
   e2e: {
     specPattern: ["basic.cy.js"],
-    supportFile: false
-  }
+    supportFile: false,
+    setupNodeEvents(on, config) {
+      on('before:browser:launch', (browser = {}, launchOptions) => {
+        launchOptions.args.push("--disable-gpu-shader-disk-cache")
+      })
+    }
+  },
 })

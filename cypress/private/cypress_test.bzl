@@ -1,10 +1,12 @@
 load("@aspect_rules_js//js:libs.bzl", "js_binary_lib", "js_lib_helpers")
 load("@bazel_skylib//lib:dicts.bzl", "dicts")
-load("@bazel_skylib//lib:paths.bzl", "paths")
 
 _attrs = dicts.add(js_binary_lib.attrs, {
     "runner": attr.label(
-        doc = "",
+        doc = """JS file to call into the cypress module api
+
+See https://docs.cypress.io/guides/guides/module-api
+        """,
         allow_single_file = [".js"],
         mandatory = True,
     ),
@@ -13,14 +15,12 @@ _attrs = dicts.add(js_binary_lib.attrs, {
 def _impl(ctx):
     cypress_bin = ctx.toolchains["@aspect_rules_cypress//cypress:toolchain_type"].cypressinfo.target_tool_path
     cypress_files = ctx.toolchains["@aspect_rules_cypress//cypress:toolchain_type"].cypressinfo.tool_files
-    # TODO
-    # host_cypress_path = ctx.toolchains["@aspect_rules_cypress//cypress:toolchain_type"].target_tool
 
     files = ctx.files.data[:] + cypress_files
 
     fixed_args = [
         cypress_bin,
-        ctx.file.runner.short_path
+        ctx.file.runner.short_path,
     ]
 
     launcher = js_binary_lib.create_launcher(
